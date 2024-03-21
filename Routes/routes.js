@@ -3,11 +3,12 @@ const router = express.Router();
 const multer = require('multer');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
-const newLocal = '../models/users';
-const User = require(newLocal);
+const authController = require('../controllers/authController');
+const User = require('../models/users');
 
 
-
+router.get("/addUser", authController.addUserSite);
+router.post("/add", authController.addUser);
 // index.ejs
 // router.get('/', async (req, res) => {
 //     try {
@@ -50,8 +51,12 @@ router.post('/login', async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' });
     }
 });
+
 router.get('/adminLogin', (req, res) => {
     res.render('administration/loginAdminSite', {title: 'Admin Login'});
 });
+
+
+
 
 module.exports = router;

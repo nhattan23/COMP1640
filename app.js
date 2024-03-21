@@ -4,6 +4,9 @@ const express = require('express');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const path = require('path');
+const cookieParser = require('cookie-parser');
+const auth = require('./Routes/auth');
+
 
 const app = express();
 const PORT = process.env.PORT || 4000;
@@ -11,7 +14,7 @@ const PORT = process.env.PORT || 4000;
 // Cấu hình Express để phục vụ các tệp tĩnh từ thư mục public
 app.use(express.static(path.join(__dirname, 'public')));
 // database
-mongoose.connect(process.env.DB_URI, {useNewUrlParser: true, useUnifiedTopology: true,} );
+mongoose.connect(process.env.DB_URI);
 const db = mongoose.connection;
 db.on('error', (error) => console.log(error));
 db.once('open', () => console.log('Connected to database'));
@@ -44,7 +47,8 @@ app.set("view engine", "ejs");
 // })
 
 // route prefix
-app.use("", require("./Routes/routes"))
+// app.use("", require("./Routes/routes"))
+app.use("", auth);
 
 app.listen(PORT, () => {
     console.log(`Server started at http://localhost:${PORT}`);

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const userSchema = new mongoose.Schema({
-    userName: {
+    name: {
         type: String,
         required: true,
     },
@@ -21,9 +21,9 @@ const userSchema = new mongoose.Schema({
         type:String,
         required: true,
     },
-    created: {
-        type: Date,
-        dafault: Date.now,
+    isAdmin: {
+        type: Boolean,
+        dafault: false,
     },
     role: {
         type: mongoose.Schema.ObjectId,
@@ -37,5 +37,6 @@ const userSchema = new mongoose.Schema({
         type: mongoose.Schema.ObjectId,
         ref: 'Academy',
     },
-});
+}, {timestamps: true}
+);
 module.exports = mongoose.model('User', userSchema);
